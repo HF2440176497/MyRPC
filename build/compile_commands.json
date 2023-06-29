@@ -1,0 +1,22 @@
+[
+{
+  "directory": "/home/ubuntu/RPCProject/build/src",
+  "command": "/usr/bin/g++ -Dmprpc_EXPORTS -I/home/ubuntu/RPCProject/src/include -I/home/ubuntu/RPCProject/example -g -fPIC -o CMakeFiles/mprpc.dir/mprpcapplication.cc.o -c /home/ubuntu/RPCProject/src/mprpcapplication.cc",
+  "file": "/home/ubuntu/RPCProject/src/mprpcapplication.cc"
+},
+{
+  "directory": "/home/ubuntu/RPCProject/build/src",
+  "command": "/usr/bin/g++ -Dmprpc_EXPORTS -I/home/ubuntu/RPCProject/src/include -I/home/ubuntu/RPCProject/example -g -fPIC -o CMakeFiles/mprpc.dir/rpcprovider.cc.o -c /home/ubuntu/RPCProject/src/rpcprovider.cc",
+  "file": "/home/ubuntu/RPCProject/src/rpcprovider.cc"
+},
+{
+  "directory": "/home/ubuntu/RPCProject/build/example/callee",
+  "command": "/usr/bin/g++  -I/home/ubuntu/RPCProject/src/include -I/home/ubuntu/RPCProject/example -g -o CMakeFiles/provider.dir/userservice.cc.o -c /home/ubuntu/RPCProject/example/callee/userservice.cc",
+  "file": "/home/ubuntu/RPCProject/example/callee/userservice.cc"
+},
+{
+  "directory": "/home/ubuntu/RPCProject/build/example/callee",
+  "command": "/usr/bin/g++  -I/home/ubuntu/RPCProject/src/include -I/home/ubuntu/RPCProject/example -g -o CMakeFiles/provider.dir/__/user.pb.cc.o -c /home/ubuntu/RPCProject/example/user.pb.cc",
+  "file": "/home/ubuntu/RPCProject/example/user.pb.cc"
+}
+]
