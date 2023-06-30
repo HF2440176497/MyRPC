@@ -6,6 +6,11 @@
 },
 {
   "directory": "/home/ubuntu/RPCProject/build/src",
+  "command": "/usr/bin/g++ -Dmprpc_EXPORTS -I/home/ubuntu/RPCProject/src/include -I/home/ubuntu/RPCProject/example -g -fPIC -o CMakeFiles/mprpc.dir/mprpcconfig.cc.o -c /home/ubuntu/RPCProject/src/mprpcconfig.cc",
+  "file": "/home/ubuntu/RPCProject/src/mprpcconfig.cc"
+},
+{
+  "directory": "/home/ubuntu/RPCProject/build/src",
   "command": "/usr/bin/g++ -Dmprpc_EXPORTS -I/home/ubuntu/RPCProject/src/include -I/home/ubuntu/RPCProject/example -g -fPIC -o CMakeFiles/mprpc.dir/rpcprovider.cc.o -c /home/ubuntu/RPCProject/src/rpcprovider.cc",
   "file": "/home/ubuntu/RPCProject/src/rpcprovider.cc"
 },
