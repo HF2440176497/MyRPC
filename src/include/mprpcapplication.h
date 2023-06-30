@@ -1,5 +1,7 @@
 #pragma once
 
+#include "mprpcconfig.h"
+
 // RPC 的初始化类：单例类
 // 饿汉式实现 即程序执行，即保证静态实例已创建
 class MprpcApplication {
@@ -8,6 +10,9 @@ private:
     ~MprpcApplication() {};
     MprpcApplication(const MprpcApplication&) = delete;
     MprpcApplication(MprpcApplication&&) = delete;
+
+public:
+    static MprpcConfig m_config;  // 
 
 public:
     static void Init(int argc, char** argv);
