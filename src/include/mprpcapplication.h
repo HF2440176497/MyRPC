@@ -12,14 +12,12 @@ private:
     MprpcApplication(MprpcApplication&&) = delete;
 
 public:
-    static MprpcConfig m_config;  // 
+    static MprpcConfig m_config;
 
 public:
     static void Init(int argc, char** argv);
-    static MprpcApplication& GetInstance() {
-        static MprpcApplication m_instance;
-        return m_instance;
-    }
+    static MprpcApplication& GetInstance();
+    MprpcConfig& GetConfig();
 };
 
 // 单例模式

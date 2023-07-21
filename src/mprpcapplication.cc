@@ -7,6 +7,17 @@
 
 MprpcConfig MprpcApplication::m_config = MprpcConfig();
 
+MprpcApplication& MprpcApplication::GetInstance() {
+    static MprpcApplication m_instance;
+    return m_instance;
+}
+
+// 返回静态对象的引用
+// 单例类中的静态成员变量，对于此成员变量来讲，也是只有一份的
+MprpcConfig& MprpcApplication::GetConfig() {
+    return m_config;
+}
+
 /**
  * @brief 打印日志
 */
