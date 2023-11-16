@@ -3,6 +3,7 @@
 #include <string>
 #include <unordered_map>
 
+// MprpcApplication 中含有 static 成员变量 m_config
 class MprpcConfig {
 public:
     void LoadConfigFile(const char* conf_file);

@@ -35,6 +35,7 @@ message RegisterResponse
     bool sucess = 2;
 }
 
+// 双方约定的需要远程调用的方法
 service UserServiceRpc
 {
     rpc Login(LoginRequest) returns(LoginResponse);
