@@ -26,7 +26,8 @@ static void ShowArgsHelp(const std::string& infostr) {
 }
 
 /**
- * @brief RPC 服务初始化,
+ * @brief RPC 服务初始化，读取命令行参数
+ * MprpcApplication 是初始化类
 */
 void MprpcApplication::Init(int argc, char** argv) {
     if (argc < 2) {  // 未指定配置文件

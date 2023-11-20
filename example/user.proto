@@ -9,6 +9,7 @@ message ResultCode
     int32 errcode = 1; 
     bytes errmsg = 2;
 }
+// 读取结果 errcode == 0 表示成功
 
 message LoginRequest
 {
@@ -35,6 +36,7 @@ message RegisterResponse
     bool sucess = 2;
 }
 
+// 双方约定的需要远程调用的方法
 service UserServiceRpc
 {
     rpc Login(LoginRequest) returns(LoginResponse);

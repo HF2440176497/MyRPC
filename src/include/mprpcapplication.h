@@ -1,6 +1,8 @@
 #pragma once
 
 #include "mprpcconfig.h"
+#include "mprpcchannel.h"
+#include "mprpccontroller.h"
 
 // RPC 的初始化类：单例类
 // 饿汉式实现 即程序执行，即保证静态实例已创建
@@ -27,7 +29,6 @@ public:
 // 饿汉式：静态成员赋初值时直接赋予有效值，但是对于饿汉式单例对象不会被其他全局对象涉及
 // 因为多个 cpp 文件的全局对象初始化顺序不确定
 
-// 
 // 避免多线程问题：
 // 
 // 内存释放问题：

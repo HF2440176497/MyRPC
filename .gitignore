@@ -1,4 +1,4 @@
-lib/libmprpc.a
+lib/
 bin/
 build/
-test
+test/
