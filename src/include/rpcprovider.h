@@ -19,6 +19,9 @@ private:
     void OnConnection(const muduo::net::TcpConnectionPtr&);
     void OnMessage(const muduo::net::TcpConnectionPtr&, muduo::net::Buffer*, muduo::Timestamp);
 
+    // Closure 回调操作 需要返回的是 Message 类型的 response
+    void SendRpcResponse(const muduo::net::TcpConnectionPtr&, google::protobuf::Message*);
+
 private:
     muduo::net::EventLoop m_eventLoop;
 

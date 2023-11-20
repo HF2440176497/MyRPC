@@ -9,6 +9,7 @@ message ResultCode
     int32 errcode = 1; 
     bytes errmsg = 2;
 }
+// 读取结果 errcode == 0 表示成功
 
 message LoginRequest
 {
