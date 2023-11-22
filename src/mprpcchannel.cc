@@ -1,4 +1,6 @@
 
+#include "mprpcchannel.h"
+
 #include <arpa/inet.h>
 #include <errno.h>
 #include <netinet/in.h>
@@ -11,15 +13,15 @@
 
 #include "mprpcapplication.h"
 #include "rpcheader.pb.h"
-#include "mprpcchannel.h"
+#include "zookeeperutil.h"
 
 /**
- * @brief 
- * @param method 
+ * @brief
+ * @param method
  * @param controller caller 传递，在内修改，业务代码在外读取
  * @param request caller 直接按照业务需求进行传递的
- * @param response 
- * @param done 
+ * @param response
+ * @param done
  * @details stub.method 业务代码调用
  */
 void MprpcChannel::CallMethod(const google::protobuf::MethodDescriptor* method,
@@ -72,11 +74,32 @@ void MprpcChannel::CallMethod(const google::protobuf::MethodDescriptor* method,
         return;
     }
 
-    // mprpc 生成得到库文件，业务逻辑代码链接库文件，最终得到可执行文件
-    // 单例对象往往作为全局变量，需要能够独立生成
-    std::string ip   = MprpcApplication::GetInstance().GetConfig().GetItem("rpcserverip");
-    uint16_t    port = atoi(MprpcApplication::GetInstance().GetConfig().GetItem("rpcserverport").c_str());
+    // --------- Zookeeper 新增代码部分 ---------
 
+    // 同样定义 zkClient：不同于 provider 注册 RPC 服务，这里是向 server 查询
+    ZkClient zkCli;
+    zkCli.Start();
+
+    std::string method_path = "/" + service_name + "/" + method_name;  // 按照注册时候的路径
+    std::string host_data   = zkCli.GetData(method_path.c_str());  // Create 时的节点数据
+
+    if (host_data == "") {
+        controller->SetFailed(method_path + " is not exist!");
+        return;
+    }
+    int idx = host_data.find(":");
+    if (idx == -1) {
+        controller->SetFailed(method_path + " address is invalid!");
+        return;
+    }
+    std::string ip   = host_data.substr(0, idx);
+    uint16_t    port = atoi(host_data.substr(idx + 1, host_data.size() - idx).c_str());
+    // --------- Zookeeper 新增代码部分 ---------
+
+    // std::string ip   = MprpcApplication::GetInstance().GetConfig().GetItem("rpcserverip");
+    // uint16_t    port = atoi(MprpcApplication::GetInstance().GetConfig().GetItem("rpcserverport").c_str());
+
+    // 客户端编程模型
     struct sockaddr_in server_addr;
     server_addr.sin_family      = AF_INET;
     server_addr.sin_port        = htons(port);
@@ -90,7 +113,7 @@ void MprpcChannel::CallMethod(const google::protobuf::MethodDescriptor* method,
     // 发送rpc请求
     if (-1 == send(clientfd, send_rpc_str.c_str(), send_rpc_str.size(), 0)) {
         close(clientfd);
-        controller->SetFailed("send error"); 
+        controller->SetFailed("send error");
         return;
     }
     // recv_buf 接收到服务端发送的序列化调用结果
