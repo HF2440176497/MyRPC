@@ -8,6 +8,7 @@
 #include "mprpcapplication.h"  // 提供框架的初始化
 #include "rpcheader.pb.h"
 #include "logger.h"
+#include "zookeeperutil.h"
 
 MprpcApplication& g_mprpcapp = MprpcApplication::GetInstance();
 
@@ -158,6 +159,26 @@ void RpcProvider::Run() {
     server.setMessageCallback(std::bind(&RpcProvider::OnMessage, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 
     server.setThreadNum(4);
+
+    // --------- Zookeeper 新增代码部分 --------- 
+    ZkClient zkCli;
+    zkCli.Start();
+
+    // 对注册的服务创建节点
+    for (auto& sp: m_serviceMap) {
+        std::string service_path = '/' + sp.first;
+        zkCli.Create(service_path.c_str(), nullptr, 0);
+        for (auto& mp: sp.second.m_methodMap) {
+            
+            char method_path_data[128] {};
+            sprintf(method_path_data, "%s:%d", ip.c_str(), port);
+
+            std::string method_path = service_path + '/' + mp.first;
+            zkCli.Create(method_path.c_str(), method_path_data, strlen(method_path_data), ZOO_EPHEMERAL);
+        }
+    }
+    // provider 自身作为服务端提供服务，也连接到 zkserver，向 zkserver 注册相当于 client
+    // --------- Zookeeper 新增代码部分 ---------
 
     std::cout << "RPC Provider start service at ip:" << ip << "; port: " << port << std::endl;
     server.start();

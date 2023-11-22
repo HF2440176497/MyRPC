@@ -21,11 +21,11 @@ Logger::Logger() : m_lckQue({}), m_loglevel(INFO) {
             m_lckQue.Pop(msg);
 
             char time_buf[128]{};
-            sprintf(time_buf, "%d:%d:%d => [%S]",
+            sprintf(time_buf, "%d:%d:%d => [%s]",
                     now_tm->tm_hour,
                     now_tm->tm_min,
                     now_tm->tm_sec,
-                    LogLevel_tab[m_loglevel]);
+                    LogLevel_tab[m_loglevel].c_str());
             msg.insert(0, time_buf);
             msg.append("\n");
 
